@@ -1,0 +1,80 @@
+services:
+  app1:
+    build: .
+    environment:
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      - PORT=3000
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  app2:
+    build: .
+    environment:
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      - PORT=3000
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app1
+      - app2
+    restart: unless-stopped
+
+  # monitoring jalan di network host dan hanya listen di 127.0.0.1,
+  # jadi tidak terbuka ke publik (akses Grafana lewat SSH tunnel)
+  prometheus:
+    image: prom/prometheus
+    network_mode: host
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.listen-address=127.0.0.1:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter
+    network_mode: host
+    pid: host
+    command:
+      - --path.rootfs=/host
+      - --web.listen-address=127.0.0.1:9100
+    volumes:
+      - /:/host:ro,rslave
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana
+    network_mode: host
+    environment:
+      - GF_SERVER_HTTP_ADDR=127.0.0.1
+      - GF_SERVER_HTTP_PORT=3001
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  grafana-data:
