@@ -12,18 +12,108 @@
   --light:#eaf7f0;
   --orange:#f59e0b;
 }
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;color:#24352d;background:#f8faf9}
-nav{height:76px;background:white;display:flex;align-items:center;justify-content:space-between;padding:0 8%;box-shadow:0 2px 12px #0000000a;position:sticky;top:0;z-index:5}
-.logo{font-size:22px;font-weight:800;color:var(--green)}
-nav a{color:#42534a;text-decoration:none;margin-left:25px;font-weight:600}
-.hero{padding:85px 8%;background:linear-gradient(120deg,#e5f6ed,#f6fbf7);display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:40px}
-.hero h1{font-size:clamp(36px,5vw,58px);line-height:1.12;color:var(--dark);margin:15px 0}
-.hero p{color:#60746a;line-height:1.8;font-size:17px;max-width:570px}
-.tag{color:var(--green);font-weight:bold}
-.btn{display:inline-block;background:var(--green);color:white;padding:14px 23px;border:0;border-radius:9px;text-decoration:none;font-weight:bold;cursor:pointer}
-.hero-art{background:linear-gradient(145deg,#087f5b,#42a77d);border-radius:28px;padding:35px;color:white;min-height:260px;display:flex;flex-direction:column;justify-content:center}
-.hero-art strong{font-size:45px}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #24352d;
+    background: #f8faf9;
+}
+
+/* NAVIGATION */
+nav {
+    height: 76px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8%;
+    box-shadow: 0 2px 12px #0000000a;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--green);
+}
+
+nav a {
+    color: #42534a;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 600;
+}
+
+/* HERO SECTION */
+.hero {
+    padding: 85px 8%;
+    background: linear-gradient(120deg, #e5f6ed, #f6fbf7);
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 4%;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.12;
+    color: var(--dark);
+    margin: 15px 0;
+}
+
+/* PARAGRAF SEBELAH KIRI */
+.hero p {
+    color: #60746a;
+    line-height: 1.8;
+    font-size: 17px;
+    max-width: 570px;
+}
+
+/* TAGLINE */
+.tag {
+    color: var(--green);
+    font-weight: bold;
+}
+
+/* BUTTON */
+.btn {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 14px 23px;
+    border: 0;
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* KARTU HIJAU SEBELAH KANAN */
+.hero-art {
+    background: linear-gradient(145deg, #087f5b, #42a77d);
+    border-radius: 28px;
+    padding: 35px;
+    color: white;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* IKON HATI */
+.hero-art strong {
+    font-size: 45px;
+}
+
+/* PARAGRAF DALAM KARTU HIJAU */
+.hero-art p {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:30px 8%}
 .stat,.campaign,.form-card{background:white;border:1px solid #e7eee9;border-radius:14px;padding:23px}
 .stat strong{display:block;font-size:25px;color:var(--green);margin-bottom:7px}
